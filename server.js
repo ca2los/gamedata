@@ -15,7 +15,7 @@
         {
             host: 'localhost',
             user: 'root',
-            password: "270286cao",
+            password: "",
             database: 'game_db'
         }
     );
