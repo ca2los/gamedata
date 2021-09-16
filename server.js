@@ -1,7 +1,13 @@
     // NPM: Packages
     const express = require('express');
     const mysql = require('mysql2');
+    const inquirer = require('inquirer');
+    const cTable = require('console.table');
+    const term = require("terminal-kit").terminal;
+    const util = require("util");
 
+    // IMPORT: Local files
+    const banner = require('./banner/banner');
 
     // LOCAL: Computer connection
     const PORT = process.env.PORT || 3001;
