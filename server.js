@@ -2,6 +2,7 @@
     const express = require('express');
     const mysql = require('mysql2');
 
+
     // LOCAL: Computer connection
     const PORT = process.env.PORT || 3001;
     const app = express();
@@ -15,8 +16,8 @@
         {
             host: 'localhost',
             user: 'root',
-            password: "",
-            database: 'game_db'
+            password: "270286cao",
+            database: 'game_db',
         }
     );
 
@@ -100,6 +101,15 @@
             }
         });
     });
+
+    app.use((req, res) => {
+        res.status(404).end();
+    });
+
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+
 
     // Express is a backend for Node JS to create web apps and APIs.
     // MySQL is the most famous database service and the package allows Node JS connection.
