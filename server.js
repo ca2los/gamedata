@@ -5,27 +5,19 @@
 
     // IMPORT: Local files
     const banner = require('./banner/banner');
-    const VideoGame = require("./constructor/profile_01");
 
     // SERVER: Credentials
-    const connection = mysql.createConnection(
+    const db = mysql.createConnection(
         {
             host: 'localhost',
-            port: 3001,
             user: 'root',
-            password: "",
+            password: "270286cao",
             database: 'game_db',
         }
     );
 
-    connection.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected as id " + connection.threadId + "\n");
-        managerView();
-    })
-
     // QUESTIONS: Add a video game
-    function managerView() {
+    function managerCMS() {
 
         console.log(banner);
 
@@ -34,7 +26,7 @@
                 {
                     type: 'input',
                     name: 'start',
-                    message: 'Do you want to start?'
+                    message: 'Press ENTER to continue'
                 }
             ]).then(() => {
                 now_create();
@@ -53,7 +45,7 @@
                         'TVSeries',
                         'Books',
                         'Comics',
-                        'No data at the moment'
+                        "EXIT \n"
                     ]
                 }
             ]).then(user_select => {
@@ -73,8 +65,9 @@
                     case 'Comics':
                         comics();
                         break;
-                    default:
-                        createMedia();
+                    case "Exit \n":
+                        exit();
+                        break;
                 }
             });
         }
@@ -84,7 +77,13 @@
                 {
                     message: "View options:",
                     type: "list",
-                    choices: ["Show all video games", "Filter video games by year", "Update video game data", "Add a new video game", "Exit \n"],
+                    choices: [
+                        "Show all video games",
+                        "Filter video games by studio",
+                        "Update video game data",
+                        "Add a new video game",
+                        "EXIT \n"
+                    ],
                     name: "task"
 
                 }
@@ -94,8 +93,8 @@
                     case "Show all video games":
                         orderBy_all();
                         break;
-                    case "Filter video games by year":
-                        orderBy_year();
+                    case "Filter video games by studio":
+                        orderBy_studio();
                         break;
                     case "Update video game data":
                         updateGame();
@@ -111,155 +110,123 @@
         }
 
         function orderBy_all() {
-            //left join to pull dept name from dept id
-            connection.query("SELECT * FROM products LEFT JOIN departments on products.department = departments.dept_id GROUP BY item_id", function (err, data) {
+            db.query("SELECT * FROM game", function (err, data) {
                 if (err) throw err;
                 //using easy-table to display the joined data
                 var t = new Table;
-                data.forEach(function (product) {
-                    t.cell('Item ID', product.item_id)
-                    t.cell('Product Name', product.product_name)
-                    t.cell('Department', product.dept_name)
-                    t.cell('Price, USD', product.price, Table.number(2))
-                    t.cell('Quantity', product.stock_quantity)
+                data.forEach(function (vg) {
+                    t.cell('Item ID', vg.id)
+                    t.cell('Video Game', vg.name)
+                    t.cell('Year', vg.year)
+                    t.cell('Console', vg.console)
+                    t.cell('Console Brand', vg.brand)
+                    t.cell('Digital Format', vg.digital)
+                    t.cell('Release Price', vg.price)
+                    t.cell('ESRB Rating', vg.rate_id)
                     t.newRow()
                 })
                 console.log(t.toString())
-                managerView();
+                managerCMS();
             })
         }
-        function orderBy_year() {
-            connection.query("SELECT * FROM products LEFT JOIN departments on products.department = departments.dept_id WHERE products.stock_quantity <5", function (err, data) {
-                if (err) throw err;
-                //using easy-table to display the joined data
-                var t = new Table;
-                data.forEach(function (product) {
-                    t.cell('Item ID', product.item_id)
-                    t.cell('Product Name', product.product_name)
-                    t.cell('Department', product.dept_name)
-                    t.cell('Price, USD', product.price, Table.number(2))
-                    t.cell('Quantity', product.stock_quantity)
-                    t.newRow()
-                })
-                console.log(t.toString())
-                managerView();
-            })
 
-        }
-        function updateGame() {
-            //left join to pull dept name from dept id
-            connection.query("SELECT * FROM products LEFT JOIN departments on products.department = departments.dept_id GROUP BY item_id", function (err, data) {
-                if (err) throw err;
-                //using easy-table to display the joined data
-                var t = new Table;
-                data.forEach(function (product) {
-                    t.cell('Item ID', product.item_id)
-                    t.cell('Product Name', product.product_name)
-                    t.cell('Department', product.dept_name)
-                    t.cell('Price, USD', product.price, Table.number(2))
-                    t.cell('Quantity', product.stock_quantity)
-                    t.newRow()
-                })
-                console.log("\n" + t.toString())
-                //inquirer prompts to set user actions
-                inquirer.prompt([
-                    {
-                        message: "Please enter the ID of the product you would like to restock",
-                        type: "input",
-                        name: "product"
-                    },
-                    {
-                        message: "How many would you like to add?",
-                        type: "input",
-                        name: "number"
-                    }
-
-                ]).then(function (answer) {
-                    //database is 1 indexed, and array 0 indexed, setting product to the JSON object pulled from our SQL db
-                    var product = data[(answer.product - 1)];
-                    var num = parseInt(answer.number);
-                    //sets stock quantity to current + amt added
-                    var newNum = parseInt((product.stock_quantity + num));
-                    connection.query(
-                        "UPDATE products SET ? WHERE ?",
-                        [
-                            {
-                                stock_quantity: newNum
-                            },
-                            {
-                                item_id: product.item_id
-                            }
-                        ],
-                        //logs success/failure and the total for the transaction (num desired*price of prod)
-                        function (error) {
-                            if (error) throw error;
-                            var stock = product.stock_quantity;
-                            console.log("Restock successful!");
-                            orderBy_all();
-                            // managerView();
-                        }
-                    )
-
-                })
-            })
-        }
         function newGame() {
-            //empty array to dynamically populate current departments
-            var deptChoices = [];
-            //selects all departments, pushes the id and name for each into the array
-            connection.query("SELECT * FROM departments", function (err, data) {
-                if (err) throw err;
-                for (i = 0; i < data.length; i++) {
-                    deptChoices.push(data[i].dept_id + " - " + data[i].dept_name)
-                }
-            })
             inquirer.prompt([
                 {
-                    message: "What product would you like to add?",
-                    type: "input",
-                    name: "product"
+                    type: 'input',
+                    name: 'name_videogame',
+                    message: 'Video Game name:',
+                    validate: answer => {
+                        if (answer !== "") {
+                            return true;
+                        }
+                        return "Enter the name of the video game.";
+                    }
                 },
                 {
-                    message: "What department does it belong in?",
-                    type: "list",
-                    //inquirer choices accept arrays, using the one created above
-                    choices: deptChoices,
-                    name: "dept"
+                    type: 'input',
+                    name: 'year_videogame',
+                    message: 'Year of release:',
+                    validate: answer => {
+                        const pass = answer.match(
+                            /^[0-9]\d*$/
+                        );
+                        if (pass) {
+                            return true;
+                        }
+                        return "Enter a year of release.";
+                    }
                 },
                 {
-                    message: "Retail price of product?",
-                    type: "input",
-                    name: "price"
+                    type: 'input',
+                    name: 'console_name',
+                    message: 'Name of the console:',
+                    validate: answer => {
+                        if (answer !== "") {
+                            return true;
+                        }
+                        return "Enter the name of the console.";
+                    }
                 },
                 {
-                    message: "How many to add?",
-                    type: "input",
-                    name: "count"
+                    type: 'input',
+                    name: 'console_brand',
+                    message: 'Name of the brand:',
+                    validate: answer => {
+                        if (answer !== "") {
+                            return true;
+                        }
+                        return "Enter the name of the brand.";
+                    }
+                },
+                {
+                    type: 'confirm',
+                    name: 'game_format',
+                    message: 'Is the game in digital format?',
+                },
+                {
+                    type: 'input',
+                    name: 'release_price',
+                    message: 'Price on release day: $',
+                    validate: answer => {
+                        const pass = answer.match(
+                            /^[0-9]\d*$/
+                        );
+                        if (pass) {
+                            return true;
+                        }
+                        return "Enter a number value.";
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'rating_videogame',
+                    message: 'ESRB rating:',
+                    validate: answer => {
+                        const pass = answer.match(
+                            /^[0-9]\d*$/
+                        );
+                        if (pass) {
+                            return true;
+                        }
+                        return "Enter a number value.";
+                    }
                 }
             ]).then(function (answer) {
-                var newProduct = answer.product;
-                console.log(newProduct);
-                //sets dept equal to the first index of the string chosen from our array 'deptChoices
-                //since the array is created as "dept_id + ..." this will always be our id
-                var dept = parseInt(answer.dept[0]);
-                var price = parseFloat(answer.price);
-                var quant = parseInt(answer.count);
-                connection.query(
-                    "INSERT INTO products (product_name, department, price, stock_quantity, product_sales) VALUES(?,?,?,?,0.00)",
-                    [
-                        newProduct,
-                        dept,
-                        price,
-                        quant
-                    ],
+                var new_game = answer.vg;
+                console.log(new_game);
+                db.query("INSERT INTO game (name, year, console, brand, digital, price, rate_id) VALUES (?,?,?,?,?,?,?)",
                     function (err) {
                         if (err) throw err;
                         orderBy_all();
-                    })
+                    }
+                )
             })
         }
+
         function exit() {
-            connection.end();
+            db.end();
         }
         start_program();
     }
+    managerCMS();

@@ -12,7 +12,7 @@
            ("Final Fantasy VII",2021,"PS5","Sony",false,50,4),
            ("Demon's Souls",2020,"PS5","Sony",false,60,5),
            ("Spider-Man: Remastered",2020,"PS5","Sony",true,50,4),
-           ("WarioWare: Get it together!",2021,"Nintendo Switch","Nintendo",false,45,3),
+           ("WarioWare: Get it together!",2021,"Switch","Nintendo",false,45,3),
            ("Gran Turismo Sport",2017,"PS4","Sony",false,70,2),
            ("Ghost Of Tsushima",2021,"PS5","Sony",false,60,6);
 
