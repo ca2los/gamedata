@@ -1,4 +1,6 @@
-    INSERT INTO rate (rating)
+    USE game_db;
+
+    INSERT INTO rate (name)
     VALUES ("(EC) Early Childhood"),
            ("(E) Everyone"),
            ("(E+) Everyone +10"),
@@ -7,20 +9,37 @@
            ("(A) Adults +18"),
            ("(RP) Rating Pending");
 
-    INSERT INTO game (name,year,console,brand,digital,price,rate_id)
-    VALUES ("Deathloop",2021,"PS5","Sony",false,55,6),
-           ("Final Fantasy VII",2021,"PS5","Sony",false,50,4),
-           ("Demon's Souls",2020,"PS5","Sony",false,60,5),
-           ("Spider-Man: Remastered",2020,"PS5","Sony",true,50,4),
-           ("WarioWare: Get it together!",2021,"Switch","Nintendo",false,45,3),
-           ("Gran Turismo Sport",2017,"PS4","Sony",false,70,2),
-           ("Ghost Of Tsushima",2021,"PS5","Sony",false,60,6);
+    INSERT INTO studio (name)
+    VALUES ("Arkane"),
+           ("Bluepoint"),
+           ("Insomniac"),
+           ("Nintendo"),
+           ("Polyphony Digital"),
+           ("Square Enix"),
+           ("Sucker Punch");
 
-    INSERT INTO studio (studio_creator,game_id)
-    VALUES ("Arkane",1),
-           ("Square Enix",2),
-           ("Bluepoint",3),
-           ("Insomniac",4),
-           ("Polyphony Digital",5),
-           ("Sucker Punch",6),
-           ("Nintendo",7);
+    INSERT INTO publisher (name)
+    VALUES ("Bethesda Softworks LLC"),
+           ("Nintendo Entertainment"),
+           ("Square Enix"),
+           ("Sony Interactive Entertainment");
+
+    INSERT INTO console (name)
+    VALUES ("PS5"),
+           ("PS4"),
+           ("PS3"),
+           ("PS2"),
+           ("PS1"),
+           ("Nintendo Switch"),
+           ("Nintendo 3DS"),
+           ("Super Nintendo"),
+           ("PC");
+
+    INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id)
+    VALUES ("Deathloop",2021,74.59,6,1,1,1),
+           ("Demon's Souls",2020,89.52,6,2,4,1),
+           ("Final Fantasy VII",2021,87.03,4,6,3,1),
+           ("Ghost Of Tsushima",2021,89.52,6,7,4,1),
+           ("Gran Turismo Sport",2017,19.85,2,5,4,2),
+           ("Spider-Man: Remastered",2020,89.52,4,3,4,1),
+           ("WarioWare: Get it together!",2021,48.48,2,4,2,7);

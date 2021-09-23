@@ -1,17 +1,16 @@
 {
-  "name": "mysql_miniproject",
+  "name": "07-game-db",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node duplicated/server.js"
+    "start": "node ../duplicated_01/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "console.table": "^0.10.0",
+    "easy-table": "^1.1.1",
     "express": "^4.17.1",
-    "figlet": "^1.5.2",
     "inquirer": "^8.1.5",
     "mysql2": "^2.2.5"
   },
