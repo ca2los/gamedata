@@ -51,5 +51,3 @@ ORDER BY game.price DESC;
 | Gran Turismo Sport          | 2017 |   20 | PS4          | Sony Interactive Entertainment | Polyphony Digital | (E) Everyone   |
 +-----------------------------+------+------+--------------+--------------------------------+-------------------+----------------+
 */
-
--- FILE #03: Order of creation

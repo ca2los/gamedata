@@ -117,4 +117,20 @@
         initialize();
     })();
 
-    // FILE #06: Order of creation
+    /* DATA
+    1. Destructuring assignment
+    const {prompt} = require("inquirer");
+    */
+
+    /*
+    function get_all(){
+        return connection.promise().query (
+            "SELECT game.name, game.year, game.price AS Price, console.name AS Console, publisher.name AS Publisher, studio.name AS Studio, rate.name AS ESRB FROM console INNER JOIN game ON game.console_id = console.id INNER JOIN publisher ON game.publisher_id = publisher.id INNER JOIN studio ON game.studio_id = studio.id INNER JOIN rate ON game.rate_id = rate.id ORDER BY game.price DESC;"
+        );
+    }
+    function get_console(){
+        return connection.promise().query (
+            "SELECT game.name AS Game, console.name AS Console FROM game JOIN console ON game.console_id = console.id;"
+        );
+    }
+    */

@@ -43,5 +43,3 @@
            ("Gran Turismo Sport",2017,19.85,2,5,4,2),
            ("Spider-Man: Remastered",2020,89.52,4,3,4,1),
            ("WarioWare: Get it together!",2021,48.48,2,4,2,7);
-
-    -- FILE #02: Order of creation

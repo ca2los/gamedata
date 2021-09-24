@@ -1,16 +1,17 @@
 {
   "name": "07-game-db",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ../duplicated_01/server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "easy-table": "^1.1.1",
+    "console.table": "^0.10.0",
     "express": "^4.17.1",
+    "figlet": "^1.5.2",
     "inquirer": "^8.1.5",
     "mysql2": "^2.2.5"
   },
