@@ -4,19 +4,6 @@
     const table = require("console.table");
     const figlet = require("figlet");
 
-    program();
-    function program() {
-        figlet('Game DB', function(err, data) {
-            if (err) {
-                console.log('Something went wrong...');
-                console.dir(err);
-                return;
-            }
-            console.log(data);
-        });
-        initialize();
-    }
-
     function initialize() {
         prompt([
             {
@@ -39,29 +26,51 @@
             switch (answer) {
                 case 'FILTER_ALL':
                     get_all().then(([data]) => {
-                        console.log(data);
+                        console.table((data));
                     }).catch(err => {
                         console.log(err);
                     });
                     break;
                 case 'FILTER_CONSOLE':
-                    get_console();
+                    get_console().then(([data]) => {
+                        console.table(data);
+                    }).catch(err => {
+                        console.log(err);
+                    })
                     break;
+                default:
+                    console.log("Exit");
             }
-        })
+            res.confirm === res.password
+                ? console.log('Data is ready!')
+                : console.log('Data unavailable.')
+        });
     }
 
     function get_all(){
         return connection.promise().query (
-            "SELECT game.name, game.year, game.price AS Game, console.name AS Console, publisher.name AS Publisher, studio.name AS Studio, rate.name AS ESRB FROM console INNER JOIN game ON game.console_id = console.id INNER JOIN publisher ON game.publisher_id = publisher.id INNER JOIN studio ON game.studio_id = studio.id INNER JOIN rate ON game.rate_id = rate.id ORDER BY game.price DESC;"
+            "SELECT game.name, game.year, game.price AS Price, console.name AS Console, publisher.name AS Publisher, studio.name AS Studio, rate.name AS ESRB FROM console INNER JOIN game ON game.console_id = console.id INNER JOIN publisher ON game.publisher_id = publisher.id INNER JOIN studio ON game.studio_id = studio.id INNER JOIN rate ON game.rate_id = rate.id ORDER BY game.price DESC;"
         );
     }
 
     function get_console(){
         return connection.promise().query (
-            "SELECT game.name AS g, console.name AS c FROM game JOIN console ON game.console_id = console.id;"
+            "SELECT game.name AS Game, console.name AS Console FROM game JOIN console ON game.console_id = console.id;"
         );
     }
+
+    function program() {
+        figlet('Game DB', function(err, data) {
+            if (err) {
+                console.log('Something went wrong...');
+                console.dir(err);
+                return;
+            }
+            console.log(data);
+        });
+        initialize();
+    }
+    program();
 
     /* DATA
     1. Destructuring assignment
