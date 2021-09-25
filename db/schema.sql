@@ -25,7 +25,7 @@
 
     CREATE TABLE game (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR (30) NOT NULL,
+        name VARCHAR (60) NOT NULL,
         year INT UNSIGNED NOT NULL,
         price DECIMAL UNSIGNED NOT NULL,
         -- ID ANCHORS

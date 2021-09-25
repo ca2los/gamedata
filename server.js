@@ -1,8 +1,8 @@
     // NPM Packages
     const {prompt} = require("inquirer");
-    const table = require("console.table");
     const figlet = require("figlet");
-    
+    const table = require("console.table");
+
     // Requests
     const Queries = require("./requests/requests");
     const queries = new Queries();
@@ -41,6 +41,10 @@
                     {
                         name: "Filter by game, console, publisher, studio and rating",
                         value: "FILTER_5_ROWS"
+                    },
+                    {
+                        name: "Add a new video game",
+                        value: "INSERT_GAME"
                     }
                 ]
             }
@@ -96,12 +100,215 @@
                         console.log(err);
                     })
                     break;
+                case "INSERT_GAME":
+                    init_ig();
+                    break;
                 default:
                     console.log("Exit");
             }
             res.confirm === res.password
                 ? console.log("Data is ready!")
                 : console.log("Data unavailable.")
+        });
+    }
+
+    function init_ig() {
+        prompt([
+            {
+                type: 'input',
+                name: 'VG_TITLE',
+                message: 'Enter the video game title:',
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "You must enter a video game title.";
+                }
+            },
+            {
+                type: 'input',
+                name: 'VG_YEAR',
+                message: 'Enter the year of release:',
+                validate: answer => {
+                    const pass = answer.match(
+                        /^[0-9]\d*$/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return "You must enter the year when the game was released.";
+                }
+            },
+            {
+                type: 'input',
+                name: 'VG_PRICE',
+                message: 'Enter the price of the game: USD $',
+                validate: answer => {
+                    const pass = answer.match(
+                        /^[0-9.]\d*$/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return "Only numbers (0-9) and decimals separated by a dot are allowed.";
+                }
+            },
+            {
+                type: "list",
+                name: "VG_ESRB",
+                message: "Select the ESRB classification:",
+                choices: [
+                    {
+                        name: "(EC) Early Childhood",
+                        value: 1,
+                    },
+                    {
+                        name: "(E) Everyone",
+                        value: 2,
+                    },
+                    {
+                        name: "(E+) Everyone +10",
+                        value: 3
+                    },
+                    {
+                        name: "(T) Teen",
+                        value: 4
+                    },
+                    {
+                        name: "(M) Mature",
+                        value: 5
+                    },
+                    {
+                        name: "(A) Adults +18",
+                        value: 6
+                    },
+                    {
+                        name: "(RP) Rating Pending",
+                        value: 7
+                    }
+                ]
+            },
+            {
+                type: "list",
+                name: "VG_STUDIO",
+                message: "Select the studio:",
+                choices: [
+                    {
+                        name: "Arkane",
+                        value: 1,
+                    },
+                    {
+                        name: "Bluepoint",
+                        value: 2,
+                    },
+                    {
+                        name: "Insomniac",
+                        value: 3
+                    },
+                    {
+                        name: "Kojima Productions",
+                        value: 4
+                    },
+                    {
+                        name: "Nintendo",
+                        value: 5
+                    },
+                    {
+                        name: "Polyphony Digital",
+                        value: 6
+                    },
+                    {
+                        name: "Square Enix",
+                        value: 7
+                    },
+                    {
+                        name: "Sucker Punch",
+                        value: 8
+                    }
+                ]
+            },
+            {
+                type: "list",
+                name: "VG_PUBLISHER",
+                message: "Select the publisher:",
+                choices: [
+                    {
+                        name: "Bethesda Softworks LLC",
+                        value: 1,
+                    },
+                    {
+                        name: "Nintendo Entertainment",
+                        value: 2,
+                    },
+                    {
+                        name: "Square Enix",
+                        value: 3
+                    },
+                    {
+                        name: "Sony Interactive Entertainment",
+                        value: 4
+                    }
+                ]
+            },
+            {
+                type: "list",
+                name: "VG_CONSOLE",
+                message: "Select the console:",
+                choices: [
+                    {
+                        name: "PS5",
+                        value: 1,
+                    },
+                    {
+                        name: "PS4",
+                        value: 2,
+                    },
+                    {
+                        name: "PS3",
+                        value: 3
+                    },
+                    {
+                        name: "PS2",
+                        value: 4
+                    },
+                    {
+                        name: "PS1",
+                        value: 5
+                    },
+                    {
+                        name: "Nintendo Switch",
+                        value: 6
+                    },
+                    {
+                        name: "Nintendo 3DS",
+                        value: 7
+                    },
+                    {
+                        name: "Super Nintendo",
+                        value: 8
+                    },
+                    {
+                        name: "PC",
+                        value: 9
+                    }
+                ]
+            }
+        ]).then(res => {
+            let answer = res.options;
+            switch (answer) {
+                case "VG_TITLE":
+                    queries.insert_game().then(([data]) => {
+                        console.table(data);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                default:
+                    console.log("Exit");
+            }
+            res.confirm === res.password
+                ? console.log("Data is ready!")
+                : console.log("Data failed!")
         });
     }
 

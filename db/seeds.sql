@@ -13,6 +13,7 @@
     VALUES ("Arkane"),
            ("Bluepoint"),
            ("Insomniac"),
+           ("Kojima Productions"),
            ("Nintendo"),
            ("Polyphony Digital"),
            ("Square Enix"),
@@ -38,10 +39,10 @@
     INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id)
     VALUES ("Deathloop",2021,74.59,6,1,1,1),
            ("Demon's Souls",2020,89.52,6,2,4,1),
-           ("Final Fantasy VII",2021,87.03,4,6,3,1),
-           ("Ghost Of Tsushima",2021,89.52,6,7,4,1),
-           ("Gran Turismo Sport",2017,19.85,2,5,4,2),
+           ("Final Fantasy VII",2021,87.03,4,7,3,1),
+           ("Ghost Of Tsushima",2021,89.52,6,8,4,1),
+           ("Gran Turismo Sport",2017,19.85,2,6,4,2),
            ("Spider-Man: Remastered",2020,89.52,4,3,4,1),
-           ("WarioWare: Get it together!",2021,48.48,2,4,2,7);
+           ("WarioWare: Get it together!",2021,48.48,2,5,2,6);
 
     -- FILE #02: Order of creation

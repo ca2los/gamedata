@@ -27,7 +27,7 @@ FROM console
 ORDER BY game.price DESC;
 
 -- 07. FULL TABLE (same but more complete)
-SELECT game.name, game.year, game.price AS Game, console.name AS Console, publisher.name AS Publisher, studio.name AS Studio, rate.name AS ESRB
+SELECT game.name, game.year, game.price AS Price, console.name AS Console, publisher.name AS Publisher, studio.name AS Studio, rate.name AS ESRB
 FROM console
     INNER JOIN game ON game.console_id = console.id
     INNER JOIN publisher ON game.publisher_id = publisher.id
@@ -42,7 +42,7 @@ ORDER BY game.price DESC;
 +-----------------------------+------+------+--------------+--------------------------------+-------------------+----------------+
 | name                        | year | Game | Console      | Publisher                      | Studio            | ESRB           |
 +-----------------------------+------+------+--------------+--------------------------------+-------------------+----------------+
-| Demon'Studio Souls               | 2020 |   90 | PS5          | Sony Interactive Entertainment | Bluepoint         | (A) Adults +18 |
+| Demon's Souls               | 2020 |   90 | PS5          | Sony Interactive Entertainment | Bluepoint         | (A) Adults +18 |
 | Ghost Of Tsushima           | 2021 |   90 | PS5          | Sony Interactive Entertainment | Sucker Punch      | (A) Adults +18 |
 | Spider-Man: Remastered      | 2020 |   90 | PS5          | Sony Interactive Entertainment | Insomniac         | (T) Teen       |
 | Final Fantasy VII           | 2021 |   87 | PS5          | Square Enix                    | Square Enix       | (T) Teen       |
@@ -51,5 +51,31 @@ ORDER BY game.price DESC;
 | Gran Turismo Sport          | 2017 |   20 | PS4          | Sony Interactive Entertainment | Polyphony Digital | (E) Everyone   |
 +-----------------------------+------+------+--------------+--------------------------------+-------------------+----------------+
 */
+
+-- 08. INSERT GAME (from MySQL shell)
+INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id) VALUES ("Death Stranding",2020,58.30,6,4,4,1);
+/*
++-----------------------------+------+------+--------------+--------------------------------+--------------------+----------------+
+| name                        | year | Game | Console      | Publisher                      | Studio             | ESRB           |
++-----------------------------+------+------+--------------+--------------------------------+--------------------+----------------+
+| Demon's Souls               | 2020 |   90 | PS5          | Sony Interactive Entertainment | Bluepoint          | (A) Adults +18 |
+| Ghost Of Tsushima           | 2021 |   90 | PS5          | Sony Interactive Entertainment | Sucker Punch       | (A) Adults +18 |
+| Spider-Man: Remastered      | 2020 |   90 | PS5          | Sony Interactive Entertainment | Insomniac          | (T) Teen       |
+| Final Fantasy VII           | 2021 |   87 | PS5          | Square Enix                    | Square Enix        | (T) Teen       |
+| Deathloop                   | 2021 |   75 | PS5          | Bethesda Softworks LLC         | Arkane             | (A) Adults +18 |
+| Death Stranding             | 2020 |   58 | PS5          | Sony Interactive Entertainment | Kojima Productions | (A) Adults +18 |
+| WarioWare: Get it together! | 2021 |   48 | Nintendo 3DS | Nintendo Entertainment         | Nintendo           | (E) Everyone   |
+| Gran Turismo Sport          | 2017 |   20 | PS4          | Sony Interactive Entertainment | Polyphony Digital  | (E) Everyone   |
++-----------------------------+------+------+--------------+--------------------------------+--------------------+----------------+
+*/
+
+-- 09. UPDATE GAME (from MySQL shell) *
+UPDATE game SET name="Death Stranding: Director's Cut",year=2021,price=58.30,rate_id=6,studio_id=4,publisher_id=4,console_id=1 WHERE id=6;
+
+-- 10. REMOVE GAME (from MySQL shell)
+DELETE FROM game WHERE name = "Death Stranding: Director's Cut";
+
+-- 11. INSERT GAME (from Inquirer)
+INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id) VALUES (?,?,?,?,?,?,?);
 
 -- FILE #03: Order of creation

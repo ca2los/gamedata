@@ -37,6 +37,11 @@
                 "SELECT game.name AS Game, console.name AS Console, publisher.name AS Publisher, studio.name AS Studio, rate.name AS ESRB FROM console INNER JOIN game ON game.console_id = console.id INNER JOIN publisher ON game.publisher_id = publisher.id INNER JOIN studio ON game.studio_id = studio.id INNER JOIN rate ON game.rate_id = rate.id ORDER BY game.price DESC;"
             );
         }
+        insert_game(){
+            return connection.promise().query(
+                "INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id) VALUES (?,?,?,?,?,?,?);"
+            );
+        }
     }
     module.exports = Queries;
 
