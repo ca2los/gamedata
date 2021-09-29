@@ -75,7 +75,7 @@ UPDATE game SET name="Death Stranding: Director's Cut",year=2021,price=58.30,rat
 -- 10. REMOVE GAME (from MySQL shell)
 DELETE FROM game WHERE name = "Death Stranding: Director's Cut";
 
--- 11. INSERT GAME (from Inquirer)
-INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id) VALUES (?,?,?,?,?,?,?);
+-- 11. INSERT GAME (name from Inquirer)
+INSERT INTO game (name) VALUE (?);
 
 -- FILE #03: Order of creation

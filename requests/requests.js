@@ -39,7 +39,37 @@
         }
         insert_game(){
             return connection.promise().query(
-                "INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id) VALUES (?,?,?,?,?,?,?);"
+                "INSERT INTO game (name) SET ?;"
+            );
+        }
+        insert_year(){
+            return connection.promise().query(
+                "INSERT INTO game (year) SET ?;"
+            );
+        }
+        insert_price(){
+            return connection.promise().query(
+                "INSERT INTO game (price) SET ?;"
+            );
+        }
+        insert_esrb(){
+            return connection.promise().query(
+                "INSERT INTO game (rate_id) SET ?;"
+            );
+        }
+        insert_studio(){
+            return connection.promise().query(
+                "INSERT INTO game (studio_id) SET ?;"
+            );
+        }
+        insert_publisher(){
+            return connection.promise().query(
+                "INSERT INTO game (publisher_id) SET ?;"
+            );
+        }
+        insert_console(){
+            return connection.promise().query(
+                "INSERT INTO game (console_id) SET ?;"
             );
         }
     }

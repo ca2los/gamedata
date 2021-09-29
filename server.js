@@ -303,6 +303,48 @@
                         console.log(err);
                     });
                     break;
+                case "VG_YEAR":
+                    queries.insert_year().then(([data]) => {
+                        console.table(data);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                case "VG_PRICE":
+                    queries.insert_price().then(([data]) => {
+                        console.table(data);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                case "VG_ESRB":
+                    queries.insert_esrb().then(([data]) => {
+                        console.table(data);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                case "VG_STUDIO":
+                    queries.insert_studio().then(([data]) => {
+                        console.table(data);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                case "VG_PUBLISHER":
+                    queries.insert_publisher().then(([data]) => {
+                        console.table(data);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                case "VG_CONSOLE":
+                    queries.insert_console().then(([data]) => {
+                        console.table(data);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
                 default:
                     console.log("Exit");
             }
