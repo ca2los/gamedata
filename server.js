@@ -45,6 +45,10 @@
                     {
                         name: "Add a new video game",
                         value: "INSERT_GAME"
+                    },
+                    {
+                        name: "Add a new studio",
+                        value: "INSERT_STUDIO"
                     }
                 ]
             }
@@ -103,12 +107,13 @@
                 case "INSERT_GAME":
                     init_ig();
                     break;
+                case "INSERT_STUDIO":
+                    init_as();
+                    break;
                 default:
                     console.log("Exit");
             }
-            res.confirm === res.password
-                ? console.log("Data is ready!")
-                : console.log("Data unavailable.")
+            console.log("Data is ready!");
         });
     }
 
@@ -348,9 +353,37 @@
                 default:
                     console.log("Exit");
             }
-            res.confirm === res.password
-                ? console.log("Data is ready!")
-                : console.log("Data failed!")
+            console.log("Add data!");
+        });
+    }
+
+    function init_as() {
+        prompt([
+            {
+                type: 'input',
+                name: 'ADD_STUDIO',
+                message: 'Enter the new name of the studio:',
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "You must enter the name of the studio.";
+                }
+            },
+        ]).then(res => {
+            let answer = res.options;
+            switch (answer) {
+                case "ADD_STUDIO":
+                    queries.add_studio().then(() => {
+                        console.log(`The value ${answer.name} has been added inside Studio.`);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                default:
+                    console.log("Exit");
+            }
+            console.log("Data is ready!");
         });
     }
 

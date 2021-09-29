@@ -19,12 +19,12 @@
         }
         get_studio(){
             return connection.promise().query(
-                "SELECT game.name AS Game, studio.name AS Studio FROM game JOIN studio ON game.studio_id = studio.id;\n"
+                "SELECT game.name AS Game, studio.name AS Studio FROM game JOIN studio ON game.studio_id = studio.id;"
             );
         }
         get_esrb(){
             return connection.promise().query(
-                "SELECT game.name AS Game, rate.name AS ESRB FROM game JOIN rate ON game.rate_id = rate.id;\n"
+                "SELECT game.name AS Game, rate.name AS ESRB FROM game JOIN rate ON game.rate_id = rate.id;"
             );
         }
         get_3_rows(){
@@ -39,37 +39,42 @@
         }
         insert_game(){
             return connection.promise().query(
-                "INSERT INTO game (name) SET ?;"
+                "INSERT INTO game SET name=?;"
             );
         }
         insert_year(){
             return connection.promise().query(
-                "INSERT INTO game (year) SET ?;"
+                "INSERT INTO game SET year=?;"
             );
         }
         insert_price(){
             return connection.promise().query(
-                "INSERT INTO game (price) SET ?;"
+                "INSERT INTO game SET price=?;"
             );
         }
         insert_esrb(){
             return connection.promise().query(
-                "INSERT INTO game (rate_id) SET ?;"
+                "INSERT INTO game SET rate_id=?;"
             );
         }
         insert_studio(){
             return connection.promise().query(
-                "INSERT INTO game (studio_id) SET ?;"
+                "INSERT INTO game SET studio_id=?;"
             );
         }
         insert_publisher(){
             return connection.promise().query(
-                "INSERT INTO game (publisher_id) SET ?;"
+                "INSERT INTO game SET publisher_id=?;"
             );
         }
         insert_console(){
             return connection.promise().query(
-                "INSERT INTO game (console_id) SET ?;"
+                "INSERT INTO game SET console_id=?;"
+            );
+        }
+        add_studio(){
+            return connection.promise().query(
+                "INSERT INTO studio SET name=?;"
             );
         }
     }

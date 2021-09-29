@@ -53,7 +53,7 @@ ORDER BY game.price DESC;
 */
 
 -- 08. INSERT GAME (from MySQL shell)
-INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id) VALUES ("Death Stranding",2020,58.30,6,4,4,1);
+INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id) VALUES ('Death Stranding',2020,58.30,6,4,4,1);
 /*
 +-----------------------------+------+------+--------------+--------------------------------+--------------------+----------------+
 | name                        | year | Game | Console      | Publisher                      | Studio             | ESRB           |
@@ -70,10 +70,10 @@ INSERT INTO game (name,year,price,rate_id,studio_id,publisher_id,console_id) VAL
 */
 
 -- 09. UPDATE GAME (from MySQL shell) *
-UPDATE game SET name="Death Stranding: Director's Cut",year=2021,price=58.30,rate_id=6,studio_id=4,publisher_id=4,console_id=1 WHERE id=6;
+UPDATE game SET name='Death Stranding: Director\'s Cut',year=2021,price=58.30,rate_id=6,studio_id=4,publisher_id=4,console_id=1 WHERE id=6;
 
 -- 10. REMOVE GAME (from MySQL shell)
-DELETE FROM game WHERE name = "Death Stranding: Director's Cut";
+DELETE FROM game WHERE name = 'Death Stranding: Director\'s Cut';
 
 -- 11. INSERT GAME (name from Inquirer)
 INSERT INTO game (name) VALUE (?);
