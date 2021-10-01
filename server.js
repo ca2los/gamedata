@@ -1,9 +1,10 @@
-    // NPM Packages
+    // NPM
     const {prompt} = require("inquirer");
     const figlet = require("figlet");
-    const table = require("console.table");
+    const chalk = require('chalk');
+    require("console.table");
 
-    // Requests
+    // REQ
     const Queries = require("./requests/requests");
     const queries = new Queries();
 
@@ -15,63 +16,63 @@
                 message: "SELECT AN OPTION:",
                 choices: [
                     {
-                        name: "View all data",
+                        name: chalk.yellow("View all data"),
                         value: "GET_ALL"
                     },
                     {
-                        name: "View all consoles",
-                        value: "GET_CONSOLES"
+                        name: chalk.yellow("View all consoles"),
+                        value: "GET_CONSOLE"
                     },
                     {
-                        name: "View all publishers",
-                        value: "GET_PUBLISHERS"
+                        name: chalk.yellow("View all publishers"),
+                        value: "GET_PUBLISHER"
                     },
                     {
-                        name: "View all studios",
-                        value: "GET_STUDIOS"
+                        name: chalk.yellow("View all studios"),
+                        value: "GET_STUDIO"
                     },
                     {
-                        name: "View all ESRB",
+                        name: chalk.yellow("View all ESRB"),
                         value: "GET_ESRB"
                     },
                     {
-                        name: "Filter games by console",
+                        name: chalk.green("Filter games by console"),
                         value: "FILTER_CONSOLE"
                     },
                     {
-                        name: "Filter games by publisher",
+                        name: chalk.green("Filter games by publisher"),
                         value: "FILTER_PUBLISHER"
                     },
                     {
-                        name: "Filter games by studio",
+                        name: chalk.green("Filter games by studio"),
                         value: "FILTER_STUDIO"
                     },
                     {
-                        name: "Filter games by ESRB",
+                        name: chalk.green("Filter games by ESRB"),
                         value: "FILTER_ESRB"
                     },
                     {
-                        name: "Filter by game, console, and publisher",
+                        name: chalk.green("Filter by game, console, and publisher"),
                         value: "FILTER_3_ROWS"
                     },
                     {
-                        name: "Filter by game, console, publisher, studio, and rating",
+                        name: chalk.green("Filter by game, console, publisher, studio, and rating"),
                         value: "FILTER_5_ROWS"
                     },
                     {
-                        name: "Add new console",
+                        name: chalk.blue("Add new console"),
                         value: "INSERT_CONSOLE"
                     },
                     {
-                        name: "Add new publisher",
+                        name: chalk.blue("Add new publisher"),
                         value: "INSERT_PUBLISHER"
                     },
                     {
-                        name: "Add new studio",
+                        name: chalk.blue("Add new studio"),
                         value: "INSERT_STUDIO"
                     },
                     {
-                        name: "Add new video game",
+                        name: chalk.blue("Add new video game"),
                         value: "INSERT_GAME"
                     },
                     {
@@ -85,6 +86,38 @@
             switch (answer) {
                 case "GET_ALL":
                     queries.get_all().then(([data]) => {
+                        console.table(data);
+                        initialize();
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                case "GET_CONSOLE":
+                    queries.get_console().then(([data]) => {
+                        console.table(data);
+                        initialize();
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                case "GET_PUBLISHER":
+                    queries.get_publisher().then(([data]) => {
+                        console.table(data);
+                        initialize();
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                case "GET_STUDIO":
+                    queries.get_studio().then(([data]) => {
+                        console.table(data);
+                        initialize();
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break;
+                case "GET_ESRB":
+                    queries.get_esrb().then(([data]) => {
                         console.table(data);
                         initialize();
                     }).catch(err => {
@@ -152,7 +185,7 @@
                     init_ig();
                     break;
                 default:
-                    console.log("Exit");
+                    console.log(chalk.bold.red("Exit"));
             }
             console.log("Data is ready!");
         });
@@ -422,16 +455,14 @@
         });
     }
 
-    (function program() {
-        figlet("Game DB", function(err, data) {
-            if (err) {
-                console.log("Something went wrong...");
-                console.dir(err);
-                return;
-            }
-            console.log(data);
-        });
+    figlet("Game  DataBase", function(err, data) {
+        if (err) {
+            console.log("Something went wrong...");
+            console.dir(err);
+            return;
+        }
+        console.log(data);
         initialize();
-    })();
+    });
 
     // FILE #06: Order of creation

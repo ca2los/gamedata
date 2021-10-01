@@ -1,4 +1,4 @@
-    // NPM Packages
+    // NPM
     const connection = require("../config/connection");
 
     class Queries {

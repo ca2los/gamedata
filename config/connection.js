@@ -1,10 +1,10 @@
-    // NPM Packages
+    // NPM
     const mysql = require("mysql2");
 
     const connection = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "270286cao",
+        password: "",
         database: "game_db"
     });
 
