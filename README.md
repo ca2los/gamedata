@@ -39,16 +39,57 @@ the following technologies:
 
 TECH | NAME | DOCS | DESCRIPTION
 ------------ | ------------- | ------------- | -------------
-NODE | NODE JS | [LINK](https://nodejs.org/en/) | Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
-NPM | MySQL2 | [LINK](https://www.npmjs.com/package/mysql2) | MySQL client for Node.js with focus on performance.
-NPM | EXPRESS | [LINK](https://www.npmjs.com/package/express) | Fast, un-opinionated, minimalist web framework for node.
-NPM | INQUIRER | [LINK](https://www.npmjs.com/package/inquirer) | A collection of common interactive command line user interfaces.
-NPM | CONSOLE TABLE | [LINK](https://www.npmjs.com/package/console.table) | Adds console.table method that prints an array of objects as a table in console
-NPM | FIGLET | [LINK](https://www.npmjs.com/package/figlet) | Creates ASCII Art from text. A full implementation of the FIGfont spec.
-NPM | CHALK | [LINK](https://www.npmjs.com/package/chalk) | Terminal string styling done right.
+NODE | `NODE JS` | [LINK](https://nodejs.org/en/) | Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
+NPM | `MySQL2` | [LINK](https://www.npmjs.com/package/mysql2) | MySQL client for Node.js with focus on performance.
+NPM | `EXPRESS` | [LINK](https://www.npmjs.com/package/express) | Fast, un-opinionated, minimalist web framework for node.
+NPM | `INQUIRER` | [LINK](https://www.npmjs.com/package/inquirer) | A collection of common interactive command line user interfaces.
+NPM | `CONSOLE.TABLE` | [LINK](https://www.npmjs.com/package/console.table) | Adds console.table method that prints an array of objects as a table in console
+NPM | `FIGLET` | [LINK](https://www.npmjs.com/package/figlet) | Creates ASCII Art from tex                                                               t.
+NPM | `CHALK` | [LINK](https://www.npmjs.com/package/chalk) | Terminal string styling done right.
 
 ## Server
 
+The technologies are ready, and now it's time initialize Node. Open the file `./config/connection.js` and at line "7" add
+your "MySQL" password. This connection is the bridge between the queries of the program and the database of your file.
+
+```javascript
+    
+    // BEFORE
+    const connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "game_db"
+    });
+
+    // AFTER
+    const connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "password_goes_here",
+        database: "game_db"
+    });
+    
+```
+
+It's important to access the data because otherwise errors will appear. To run the server you must go back to the console 
+and enter the command `$ node server.js` and you will get a message like the image below. With the arrows keys you will 
+be able to choose the option you want, just press `ENTER` key to initialize the option.
 ![Terminal](./img/db_01.png)
 
-## Program
+## Show data
+To visualize data you may choose any option in `Yellow` or `Green`. At this point you will see the default data already 
+seeded by the file `./db/seeds.js`. This data is just an example to show you how the tables and its rows are visualized.
+You can delete the data manually, and I'll be working on a "Delete" option to clear this data and start from zero.
+![Terminal](./img/db_02.png)
+
+## Add data
+You can add new elements by selecting any option in `Blue`, just press `ENTER` and follow the instructions. 
+![Terminal](./img/db_03.png)
+
+## Contributions
+Code contributions will be regulated by following the criteria [in this section](). Before doing any contribution, please
+check the guidelines and follow them. It's mandatory for the safe of the project.
+
+## Requests
+Post feature requests and feedback [here]().
