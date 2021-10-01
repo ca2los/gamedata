@@ -15,100 +15,141 @@
                 message: "SELECT AN OPTION:",
                 choices: [
                     {
-                        name: "View all video game data",
-                        value: "FILTER_ALL"
+                        name: "View all data",
+                        value: "GET_ALL"
                     },
                     {
-                        name: "Filter by console",
+                        name: "View all consoles",
+                        value: "GET_CONSOLES"
+                    },
+                    {
+                        name: "View all publishers",
+                        value: "GET_PUBLISHERS"
+                    },
+                    {
+                        name: "View all studios",
+                        value: "GET_STUDIOS"
+                    },
+                    {
+                        name: "View all ESRB",
+                        value: "GET_ESRB"
+                    },
+                    {
+                        name: "Filter games by console",
                         value: "FILTER_CONSOLE"
                     },
                     {
-                        name: "Filter by publisher",
+                        name: "Filter games by publisher",
                         value: "FILTER_PUBLISHER"
                     },
                     {
-                        name: "Filter by studio",
+                        name: "Filter games by studio",
                         value: "FILTER_STUDIO"
                     },
                     {
-                        name: "Filter by ESRB",
+                        name: "Filter games by ESRB",
                         value: "FILTER_ESRB"
                     },
                     {
-                        name: "Filter by game, console and publisher",
+                        name: "Filter by game, console, and publisher",
                         value: "FILTER_3_ROWS"
                     },
                     {
-                        name: "Filter by game, console, publisher, studio and rating",
+                        name: "Filter by game, console, publisher, studio, and rating",
                         value: "FILTER_5_ROWS"
                     },
                     {
-                        name: "Add a new video game",
+                        name: "Add new console",
+                        value: "INSERT_CONSOLE"
+                    },
+                    {
+                        name: "Add new publisher",
+                        value: "INSERT_PUBLISHER"
+                    },
+                    {
+                        name: "Add new studio",
+                        value: "INSERT_STUDIO"
+                    },
+                    {
+                        name: "Add new video game",
                         value: "INSERT_GAME"
                     },
                     {
-                        name: "Add a new studio",
-                        value: "INSERT_STUDIO"
+                        name: "Update console",
+                        value: "UPDATE_CONSOLE"
                     }
                 ]
             }
         ]).then(res => {
             let answer = res.options;
             switch (answer) {
-                case "FILTER_ALL":
+                case "GET_ALL":
                     queries.get_all().then(([data]) => {
                         console.table(data);
+                        initialize();
                     }).catch(err => {
                         console.log(err);
                     });
                     break;
                 case "FILTER_CONSOLE":
-                    queries.get_console().then(([data]) => {
+                    queries.get_console_by_game().then(([data]) => {
                         console.table(data);
+                        initialize();
                     }).catch(err => {
                         console.log(err);
                     })
                     break;
                 case "FILTER_PUBLISHER":
-                    queries.get_publisher().then(([data]) => {
+                    queries.get_publisher_by_game().then(([data]) => {
                         console.table(data);
+                        initialize();
                     }).catch(err => {
                         console.log(err);
                     })
                     break;
                 case "FILTER_STUDIO":
-                    queries.get_studio().then(([data]) => {
+                    queries.get_studio_by_game().then(([data]) => {
                         console.table(data);
+                        initialize();
                     }).catch(err => {
                         console.log(err);
                     })
                     break;
                 case "FILTER_ESRB":
-                    queries.get_esrb().then(([data]) => {
-                         console.table(data);
+                    queries.get_esrb_by_game().then(([data]) => {
+                        console.table(data);
+                        initialize();
                     }).catch(err => {
                         console.log(err);
                     })
                     break;
                 case "FILTER_3_ROWS":
-                    queries.get_3_rows().then(([data]) => {
+                    queries.get_3_rows_by_game().then(([data]) => {
                         console.table(data);
+                        initialize();
                     }).catch(err => {
                         console.log(err);
                     })
                     break;
                 case "FILTER_5_ROWS":
-                    queries.get_5_rows().then(([data]) => {
+                    queries.get_5_rows_by_game().then(([data]) => {
                         console.table(data);
+                        initialize();
                     }).catch(err => {
                         console.log(err);
                     })
                     break;
-                case "INSERT_GAME":
-                    init_ig();
+                case "INSERT_CONSOLE":
+                    init_ac();
+                    break;
+                case "INSERT_PUBLISHER":
+                    init_ap();
                     break;
                 case "INSERT_STUDIO":
                     init_as();
+                    break;
+                case "INSERT_GAME":
+                    init_ig();
                     break;
                 default:
                     console.log("Exit");
@@ -121,7 +162,7 @@
         prompt([
             {
                 type: 'input',
-                name: 'VG_TITLE',
+                name: 'name',
                 message: 'Enter the video game title:',
                 validate: answer => {
                     if (answer !== "") {
@@ -132,7 +173,7 @@
             },
             {
                 type: 'input',
-                name: 'VG_YEAR',
+                name: 'year',
                 message: 'Enter the year of release:',
                 validate: answer => {
                     const pass = answer.match(
@@ -146,7 +187,7 @@
             },
             {
                 type: 'input',
-                name: 'VG_PRICE',
+                name: 'price',
                 message: 'Enter the price of the game: USD $',
                 validate: answer => {
                     const pass = answer.match(
@@ -160,7 +201,7 @@
             },
             {
                 type: "list",
-                name: "VG_ESRB",
+                name: "rate_id",
                 message: "Select the ESRB classification:",
                 choices: [
                     {
@@ -195,7 +236,7 @@
             },
             {
                 type: "list",
-                name: "VG_STUDIO",
+                name: "studio_id",
                 message: "Select the studio:",
                 choices: [
                     {
@@ -234,7 +275,7 @@
             },
             {
                 type: "list",
-                name: "VG_PUBLISHER",
+                name: "publisher_id",
                 message: "Select the publisher:",
                 choices: [
                     {
@@ -257,7 +298,7 @@
             },
             {
                 type: "list",
-                name: "VG_CONSOLE",
+                name: "console_id",
                 message: "Select the console:",
                 choices: [
                     {
@@ -299,70 +340,70 @@
                 ]
             }
         ]).then(res => {
-            let answer = res.options;
-            switch (answer) {
-                case "VG_TITLE":
-                    queries.insert_game().then(([data]) => {
-                        console.table(data);
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                    break;
-                case "VG_YEAR":
-                    queries.insert_year().then(([data]) => {
-                        console.table(data);
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                    break;
-                case "VG_PRICE":
-                    queries.insert_price().then(([data]) => {
-                        console.table(data);
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                    break;
-                case "VG_ESRB":
-                    queries.insert_esrb().then(([data]) => {
-                        console.table(data);
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                    break;
-                case "VG_STUDIO":
-                    queries.insert_studio().then(([data]) => {
-                        console.table(data);
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                    break;
-                case "VG_PUBLISHER":
-                    queries.insert_publisher().then(([data]) => {
-                        console.table(data);
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                    break;
-                case "VG_CONSOLE":
-                    queries.insert_console().then(([data]) => {
-                        console.table(data);
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                    break;
-                default:
-                    console.log("Exit");
-            }
-            console.log("Add data!");
+            queries.add_game(res).then(() => {
+                initialize();
+                console.log(`Video game ${res.name} has been added!`);
+            }).catch(err => {
+                console.error(err);
+            });
+            console.log("Data is ready!");
+        });
+    }
+
+    function init_ac() {
+        prompt([
+            {
+                type: "input",
+                name: "name",   // It must be the name of the TABLE ROW
+                message: "Enter the new name of the console:",
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "You must enter the name of the console.";
+                }
+            },
+        ]).then(res => {
+            queries.add_console(res).then(() => {
+                initialize();
+                console.log(`${res.name} console has been added!`);
+            }).catch(err => {
+                console.error(err);
+            });
+            console.log("Data is ready!");
+        });
+    }
+
+    function init_ap() {
+        prompt([
+            {
+                type: "input",
+                name: "name",   // It must be the name of the TABLE ROW
+                message: "Enter the new name of the publisher:",
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "You must enter the name of the publisher.";
+                }
+            },
+        ]).then(res => {
+            queries.add_publisher(res).then(() => {
+                initialize();
+                console.log(`Publisher ${res.name} has been added!`);
+            }).catch(err => {
+                console.error(err);
+            });
+            console.log("Data is ready!");
         });
     }
 
     function init_as() {
         prompt([
             {
-                type: 'input',
-                name: 'ADD_STUDIO',
-                message: 'Enter the new name of the studio:',
+                type: "input",
+                name: "name",   // It must be the name of the TABLE ROW
+                message: "Enter the new name of the studio:",
                 validate: answer => {
                     if (answer !== "") {
                         return true;
@@ -371,18 +412,12 @@
                 }
             },
         ]).then(res => {
-            let answer = res.options;
-            switch (answer) {
-                case "ADD_STUDIO":
-                    queries.add_studio().then(() => {
-                        console.log(`The value ${answer.name} has been added inside Studio.`);
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                    break;
-                default:
-                    console.log("Exit");
-            }
+            queries.add_studio(res).then(() => {
+                initialize();
+                console.log(`Studio ${res.name} has been added!`);
+            }).catch(err => {
+                console.error(err);
+            });
             console.log("Data is ready!");
         });
     }
