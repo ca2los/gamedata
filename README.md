@@ -93,3 +93,9 @@ check the guidelines and follow them. It's mandatory for the safe of the project
 
 ## Requests
 Post feature requests and feedback [here]().
+
+## Developing
+* Delete data
+* Update data
+* Write data inside the local seeds file
+* Delete data from the local seeds file
