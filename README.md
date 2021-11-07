@@ -92,7 +92,7 @@ Code contributions will be regulated by following the criteria [in this section]
 check the guidelines and follow them. It's mandatory for the safe of the project.
 
 ## Requests
-Post feature requests and feedback [here]().
+Post feature requests and feedback [in here]().
 
 ## Developing
 * Delete data
